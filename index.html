@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>MANAGEMENT OS — Delegation & Control System</title>
+  <meta name="description" content="Management OS / Delegation & Control System" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <section id="loginView" class="login-view">
+    <div class="login-card glass">
+      <div class="brand-mark">MO</div>
+      <div class="eyebrow">MANAGEMENT OPERATING SYSTEM</div>
+      <h1>Delegation & Control System</h1>
+      <p class="muted">Secure access through Supabase Auth + Row Level Security</p>
+      <form id="loginForm" class="form-stack">
+        <label>Email <span>(อีเมล)</span>
+          <input id="loginEmail" type="email" autocomplete="username" placeholder="name@company.com" required />
+        </label>
+        <label>Password <span>(รหัสผ่าน)</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </label>
+        <button id="loginBtn" class="btn btn-primary" type="submit">Sign in (เข้าสู่ระบบ)</button>
+      </form>
+      <div id="loginError" class="error-text" role="alert"></div>
+      <div class="security-note">Publishable frontend key only · Service-role secret is never embedded.</div>
+    </div>
+  </section>
+
+  <div id="appView" class="app hidden">
+    <aside class="sidebar glass">
+      <div class="sidebar-brand">
+        <div class="brand-mark small">MO</div>
+        <div><strong>MANAGEMENT OS</strong><small>S08 / DCS</small></div>
+      </div>
+      <nav id="nav" class="nav">
+        <button data-page="overview" class="nav-item active">Overview <span>ภาพรวม</span></button>
+        <button data-page="tasks" class="nav-item">Tasks <span>มอบหมายงาน</span></button>
+        <button data-page="risks" class="nav-item">Risks <span>ความเสี่ยง</span></button>
+        <button data-page="reviews" class="nav-item">Reviews <span>ประเมินผล</span></button>
+        <button data-page="organizations" class="nav-item">Organizations <span>องค์กร</span></button>
+        <button data-page="branches" class="nav-item">Branches <span>สาขา</span></button>
+        <button data-page="centers" class="nav-item">Centers <span>ศูนย์</span></button>
+        <button data-page="access" class="nav-item">Access <span>สิทธิ์</span></button>
+        <button data-page="audit" class="nav-item">Audit <span>ประวัติ</span></button>
+        <button data-page="sync" class="nav-item">Sync <span>การเชื่อมต่อ</span></button>
+      </nav>
+      <div class="sidebar-foot">
+        <div id="sessionBadge" class="session-badge"></div>
+        <button id="logoutBtn" class="btn btn-ghost full">Sign out (ออกจากระบบ)</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar glass">
+        <div>
+          <div class="eyebrow">CONTROL CENTER</div>
+          <h2 id="pageTitle">Overview (ภาพรวม)</h2>
+        </div>
+        <div class="top-actions">
+          <button id="refreshBtn" class="btn btn-ghost">Refresh (รีเฟรช)</button>
+          <button id="primaryAction" class="btn btn-primary hidden"></button>
+        </div>
+      </header>
+      <div id="statusStrip" class="status-strip"></div>
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel glass" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h3 id="modalTitle">Action</h3>
+        <button class="icon-btn" data-close-modal aria-label="Close">×</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
