@@ -23,4 +23,4 @@ jobs:
           ! grep -qi "thai senior care v2" index.html app.js styles.css
       - name: Secret safety gate
         run: |
-          ! grep -Eqi "service_role|service-role|SUPABASE_SERVICE_ROLE_KEY" index.html app.js styles.css
+          ! grep -Eqi "SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|sb_secret_|service_role[[:space:]]*[:=]" index.html app.js styles.css
