@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thai Senior Care V2 — S02 Recovery Preview</title>
+  <style>
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:#e7ebef;color:#20252b}
+    .status{max-width:760px;margin:10vh auto;padding:24px;border:1px solid #adb5bd;border-radius:16px;background:linear-gradient(105deg,#fff,#d6dbe0 38%,#f9fafb 58%,#c9cfd4);box-shadow:0 8px 28px #24313d22}
+    .bad{color:#842424;background:#fbe5e5;padding:12px;border-radius:10px}
+  </style>
+</head>
+<body>
+  <div id="boot" class="status"><strong>กำลังเปิด Thai Senior Care V2 — S02 Recovery Preview…</strong></div>
+  <script>
+  (async()=>{
+    const SNAPSHOT='https://thai-senior-citizens-software-system-fd4xzqgs8.vercel.app/';
+    const OLD_REF='bigoboqntynuiyqfxjgz';
+    const NEW_REF='ohwewoqfhxucnwtslybf';
+    const NEW_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od2V3b3FmaHh1Y253dHNseWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MDUzNzEsImV4cCI6MjEwMzM4MTM3MX0.Dui-Ep9gl3qgtWI6Eu5dn9Vf8PVEpMKIis2xQzUGtZk';
+    const OLD_HOST=OLD_REF+'.supabase.co';
+    const NEW_HOST=NEW_REF+'.supabase.co';
+    const bridge=`<script id="s02-backend-bridge">(()=>{\n`+
+`const OLD_REF='${OLD_REF}',NEW_REF='${NEW_REF}',OLD_HOST=OLD_REF+'.supabase.co',NEW_HOST=NEW_REF+'.supabase.co',NEW_KEY='${NEW_KEY}';\n`+
+`const rewriteUrl=(raw)=>{let s=String(raw).replace('https://'+OLD_HOST,'https://'+NEW_HOST).replace('wss://'+OLD_HOST,'wss://'+NEW_HOST);try{const u=new URL(s,location.href);if(u.hostname===NEW_HOST&&u.searchParams.has('apikey'))u.searchParams.set('apikey',NEW_KEY);return u.toString()}catch{return s}};\n`+
+`try{for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i)||'';if(k.includes(OLD_REF)&&k.includes('auth'))localStorage.removeItem(k)}}catch{}\n`+
+`const nativeFetch=window.fetch.bind(window);window.fetch=async(input,init={})=>{const req=input instanceof Request?input:null;const originalUrl=req?req.url:String(input);const url=rewriteUrl(originalUrl);const headers=new Headers(init.headers||(req?req.headers:undefined));if(url.includes(NEW_HOST)){const oldApiKey=headers.get('apikey');const auth=headers.get('authorization');headers.set('apikey',NEW_KEY);if(!auth||auth===('Bearer '+oldApiKey))headers.set('authorization','Bearer '+NEW_KEY)}if(!req)return nativeFetch(url,{...init,headers});const method=(init.method||req.method||'GET').toUpperCase();const opts={method,headers,mode:req.mode,credentials:req.credentials,cache:req.cache,redirect:req.redirect,referrer:req.referrer,referrerPolicy:req.referrerPolicy,integrity:req.integrity,keepalive:req.keepalive,signal:init.signal||req.signal};if(method!=='GET'&&method!=='HEAD')opts.body=init.body!==undefined?init.body:await req.clone().arrayBuffer();return nativeFetch(url,opts)};\n`+
+`const NativeWS=window.WebSocket;function PatchedWebSocket(url,protocols){const r=rewriteUrl(url);return protocols===undefined?new NativeWS(r):new NativeWS(r,protocols)}PatchedWebSocket.prototype=NativeWS.prototype;Object.defineProperties(PatchedWebSocket,{CONNECTING:{value:NativeWS.CONNECTING},OPEN:{value:NativeWS.OPEN},CLOSING:{value:NativeWS.CLOSING},CLOSED:{value:NativeWS.CLOSED}});window.WebSocket=PatchedWebSocket;window.__S02_RECOVERY_BRIDGE__={targetRef:NEW_REF,sourceRef:OLD_REF,active:true};\n`+
+`})()<\/script>`;
+    try{
+      const r=await fetch(SNAPSHOT,{cache:'no-store'});
+      if(!r.ok) throw new Error('Snapshot fetch failed: '+r.status);
+      let html=await r.text();
+      if(!html.includes('<title>Thai Senior Care V2</title>')) throw new Error('Snapshot fingerprint mismatch');
+      html=html.replaceAll('https://'+OLD_HOST,'https://'+NEW_HOST).replaceAll('wss://'+OLD_HOST,'wss://'+NEW_HOST);
+      if(!html.includes('</head>')) throw new Error('Snapshot has no </head>');
+      html=html.replace('</head>',bridge+'</head>');
+      document.open();document.write(html);document.close();
+    }catch(e){
+      document.getElementById('boot').innerHTML='<div class="bad"><strong>Recovery preview failed</strong><br>'+String(e.message||e)+'</div>';
+    }
+  })();
+  </script>
+</body>
+</html>
