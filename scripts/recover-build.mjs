@@ -1,7 +1,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
-const SOURCE_URL = 'https://thai-senior-citizens-software-syste.vercel.app/';
+const SOURCE_URL = 'https://thai-senior-citizens-software-system-fd4xzqgs8.vercel.app/';
+const SOURCE_DEPLOYMENT_ID = 'dpl_7g183HhfepRKR6kDfBL29hgEgcnV';
 const OLD_REF = 'bigoboqntynuiyqfxjgz';
 const NEW_REF = 'ohwewoqfhxucnwtslybf';
 const NEW_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od2V3b3FmaHh1Y253dHNseWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MDUzNzEsImV4cCI6MjEwMzM4MTM3MX0.Dui-Ep9gl3qgtWI6Eu5dn9Vf8PVEpMKIis2xQzUGtZk';
@@ -10,7 +11,7 @@ const NEW_HOST = `${NEW_REF}.supabase.co`;
 
 const response = await fetch(SOURCE_URL, {
   redirect: 'follow',
-  headers: { 'user-agent': 's02-recovery-build/1.0' },
+  headers: { 'user-agent': 's02-recovery-build/1.1' },
 });
 if (!response.ok) throw new Error(`Source artifact fetch failed: ${response.status} ${response.statusText}`);
 let html = await response.text();
@@ -117,9 +118,10 @@ await writeFile('dist/index.html', html, 'utf8');
 await writeFile('dist/recovery-meta.json', JSON.stringify({
   recoveredAt: new Date().toISOString(),
   sourceUrl: SOURCE_URL,
+  sourceDeploymentId: SOURCE_DEPLOYMENT_ID,
   sourceSha256,
   sourceRef: OLD_REF,
   targetRef: NEW_REF,
-  strategy: 'build-time production artifact recovery + runtime Supabase transport bridge',
+  strategy: 'build-time immutable production artifact recovery + runtime Supabase transport bridge',
 }, null, 2));
 console.log(`Recovered Thai Senior Care V2 artifact ${sourceSha256.slice(0,12)}… -> ${NEW_REF}`);
