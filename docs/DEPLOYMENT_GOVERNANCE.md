@@ -2,7 +2,7 @@
 
 ## Objective
 
-Prevent one system's source code from being deployed into another system's Vercel project, and establish a repeatable release process across GitHub, Vercel, and Supabase.
+Prevent one system's source code from being deployed into another system's Vercel project, establish a repeatable release process across GitHub/Vercel/Supabase, and ensure recovery artifacts are identified by evidence rather than branch names alone.
 
 ## Release model
 
@@ -24,22 +24,52 @@ Every production application must have an explicit release chain:
 
 - GitHub repository: `vhalhavish-ctrl/thai-senior-citizens-software-system`
 - Current production source baseline: `main`
+- Frozen rollback branch: `release/s08-known-good-20260828`
 - Supabase: `management-os` / `ijdlppmdjrapisckllfh`
 - Vercel: `management-os-webapp`
 - Production URL: `https://management-os-webapp.vercel.app`
 - CI workflow: `.github/workflows/s08-ci.yml`
 - Governance: do not change application source during estate cleanup unless the change is explicitly for S08.
 
-### ECOSTORY recovered artifact
+### Thai Senior Citizens recovered artifact
 
-- Preserve deployment: `https://ecostory-content-60rd87uja-vhalhavish-1099s-projects.vercel.app`
-- Current historical backend: `uxooqjhhzlxwhnrypnhl`
+Direct inspection proves the historical branch `recovery/s02-production-artifact` is a **Thai Senior Care V2 / Thai Senior Citizens recovery artifact**, despite its ambiguous branch name.
+
+Verified evidence:
+
+- `package.json` name: `thai-senior-care-v2-recovery`
+- recovery fingerprint: `<title>Thai Senior Care V2</title>`
+- historical Supabase ref embedded by the source artifact: `bigoboqntynuiyqfxjgz`
+- dedicated recovery target: `ohwewoqfhxucnwtslybf`
+- canonical safety copy: `recovery/tsc-known-good-artifact-20260828`
+
+Governance: preserve both historical and canonical recovery branches until Thai Senior Citizens recovery passes build, auth, workflow, backend, UAT, and rollback acceptance.
+
+### ECOSTORY recovered deployment
+
+- Preserve Vercel deployment: `https://ecostory-content-60rd87uja-vhalhavish-1099s-projects.vercel.app`
+- Historical/shared backend observed for the working artifact: `uxooqjhhzlxwhnrypnhl`
 - Dedicated migration target: `raeohopqmbjpzjwlcaon`
-- Governance: do not switch production alias to a new ECOSTORY build until UAT confirms feature parity and data access.
+- No accessible GitHub branch has yet been verified as the authoritative ECOSTORY source.
+- Governance: do not switch production alias to a new ECOSTORY build until source reconstruction/verification and UAT confirm feature parity and data access.
+
+## Recovery evidence rule
+
+A branch, project, or deployment name is not sufficient proof of application identity. Before assigning a recovery artifact to a system, inspect at least two independent fingerprints such as:
+
+- HTML title / application name
+- package/app metadata
+- Supabase project ref/host
+- application-specific route or module names
+- deployment ID and source URL
+- schema/table namespace
+
+If names and fingerprints disagree, the fingerprint evidence wins and the governance registry must be corrected before any production action.
 
 ## Branch strategy
 
 - `main`: production baseline for the application currently hosted by this repository.
+- `release/<system>/<date>` or equivalent: frozen known-good rollback point.
 - `feature/<system>/<change>`: normal feature work.
 - `fix/<system>/<issue>`: defect fixes.
 - `recovery/<system>/<artifact>`: recovery work; retain until closure.
@@ -66,8 +96,8 @@ Before production use, verify:
 
 Do not restore a dedicated inactive Supabase project solely because a frontend project exists. Restore only when:
 
-1. the matching application source is isolated;
-2. the required schema/migrations are verified;
+1. matching application source is isolated or recovery source is verified;
+2. required schema/migrations are verified;
 3. environment variables are ready;
 4. UAT requires the dedicated backend;
 5. rollback is defined.
@@ -102,6 +132,7 @@ For every system:
 ## Release decision codes
 
 - `GO` — production promotion approved.
+- `GO-WITH-UAT` — runtime works; production remains under controlled UAT.
 - `NO-GO` — blocking defect or mapping error exists.
 - `HOLD` — intentionally paused; preserve resources.
 - `RECOVERY` — artifact retained for restoration/rollback.
@@ -109,11 +140,22 @@ For every system:
 
 ## Current release decisions
 
-- Management OS: `GO-WITH-UAT` — infrastructure is working; continue operational UAT.
-- ECOSTORY: `RECOVERY / NO-GO FOR CURRENT ALIAS` — preserve known-good artifact; isolate source before cutover.
+- Management OS: `GO-WITH-UAT` — infrastructure is working; frozen rollback point exists.
+- Thai Senior Citizens: `RECOVERY / NO-GO FOR CURRENT LINKAGE` — verified recovery source exists, but Vercel Git/build linkage must be repaired before backend restore/cutover.
+- ECOSTORY: `RECOVERY / NO-GO FOR CURRENT ALIAS` — preserve known-good Vercel artifact; authoritative Git source still needs verification/reconstruction.
 - SafeZone V3: `NO-GO` — source collision.
 - Performance Assessment: `NO-GO` — source collision.
 - ElderCare Center OS: `NO-GO` — source collision.
-- Thai Senior Citizens: `NO-GO` — linkage/build requires repair.
-- GOS: `HOLD`.
+- GOS: `HOLD/PRESERVE` — legacy ref is currently required as evidence/input for Thai Senior Citizens recovery; do not delete during recovery.
 - EOS Full Restore Drill TEMP: `TEST-ONLY`.
+
+## Recovery sequence
+
+1. Preserve S08 rollback and avoid runtime changes.
+2. Repair Thai Senior Citizens using the verified recovery artifact and dedicated target backend.
+3. Recover/verify ECOSTORY source against the known-good Vercel artifact.
+4. Reconstruct/isolate SafeZone V3.
+5. Reconstruct/isolate Performance Assessment.
+6. Reconstruct/isolate ElderCare Center OS.
+
+Each system must pass its own source fingerprint, backend mapping, UAT, and rollback gate before the next production cutover is promoted.
