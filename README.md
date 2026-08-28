@@ -20,13 +20,17 @@ Multiple Vercel projects are currently linked to this repository. If they all bu
 
 - `docs/MASTER_SYSTEM_INVENTORY.md` — cross-platform inventory and status.
 - `docs/DEPLOYMENT_GOVERNANCE.md` — release, UAT, rollback, and isolation rules.
+- `docs/RECOVERY_EVIDENCE_20260828.md` — verified recovery artifact identity and forensic evidence.
 - `ops/system-registry.json` — machine-readable resource registry.
 
 ## Protected branches / artifacts
 
 - `main` — current S08 production baseline.
+- `release/s08-known-good-20260828` — frozen S08 rollback branch.
 - `management-os-rebuild` — merged S08 rebuild branch; retain until cleanup closure.
-- `recovery/s02-production-artifact` — ECOSTORY recovery branch; **do not delete** until migration and UAT are complete.
+- `recovery/s02-production-artifact` — historical branch whose **contents are verified as Thai Senior Care V2 / Thai Senior Citizens recovery**, despite the legacy branch name. Preserve unchanged.
+- `recovery/tsc-known-good-artifact-20260828` — canonical safety copy of the verified Thai Senior Citizens recovery artifact.
+- ECOSTORY known-good recovery is currently a preserved Vercel deployment, not a verified Git recovery branch. Do not repoint ECOSTORY to either TSC recovery branch.
 
 ## Change-control rule
 
