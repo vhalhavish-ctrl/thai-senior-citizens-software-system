@@ -1,8 +1,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
-const SOURCE_URL = 'https://thai-senior-citizens-software-system-fd4xzqgs8.vercel.app/';
-const SOURCE_DEPLOYMENT_ID = 'dpl_7g183HhfepRKR6kDfBL29hgEgcnV';
+const SOURCE_URL = 'https://thai-senior-citizens-software-system-fopw20lsj.vercel.app/';
+const SOURCE_DEPLOYMENT_ID = 'dpl_5qJwuJb5DFNPhzr1nTZP1rnbCHJR';
 const OLD_REF = 'bigoboqntynuiyqfxjgz';
 const NEW_REF = 'ohwewoqfhxucnwtslybf';
 const NEW_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od2V3b3FmaHh1Y253dHNseWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MDUzNzEsImV4cCI6MjEwMzM4MTM3MX0.Dui-Ep9gl3qgtWI6Eu5dn9Vf8PVEpMKIis2xQzUGtZk';
@@ -11,7 +11,7 @@ const NEW_HOST = `${NEW_REF}.supabase.co`;
 
 const response = await fetch(SOURCE_URL, {
   redirect: 'follow',
-  headers: { 'user-agent': 's02-recovery-build/1.1' },
+  headers: { 'user-agent': 'tsc-recovery-build/2.0' },
 });
 if (!response.ok) throw new Error(`Source artifact fetch failed: ${response.status} ${response.statusText}`);
 let html = await response.text();
@@ -27,7 +27,7 @@ html = html
   .replaceAll(`https://${OLD_HOST}`, `https://${NEW_HOST}`)
   .replaceAll(`wss://${OLD_HOST}`, `wss://${NEW_HOST}`);
 
-const bridge = String.raw`<script id="s02-backend-bridge">
+const bridge = String.raw`<script id="tsc-backend-bridge">
 (()=>{
   const OLD_REF=${JSON.stringify(OLD_REF)};
   const NEW_REF=${JSON.stringify(NEW_REF)};
@@ -106,7 +106,7 @@ const bridge = String.raw`<script id="s02-backend-bridge">
   });
   window.WebSocket=PatchedWebSocket;
 
-  window.__S02_RECOVERY_BRIDGE__={targetRef:NEW_REF,sourceRef:OLD_REF,active:true};
+  window.__TSC_RECOVERY_BRIDGE__={targetRef:NEW_REF,sourceRef:OLD_REF,active:true};
 })();
 </script>`;
 
