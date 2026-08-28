@@ -1,0 +1,61 @@
+name: Multi-System Vercel Router Gate
+
+on:
+  push:
+    branches:
+      - fix/p0-vercel-project-dispatch-20260828
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-router:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify router syntax and source
+        run: |
+          node --check scripts/build-router.mjs
+          test -s apps/ecostory/index.html
+          grep -q 'ECOSTORY Content Operating System' apps/ecostory/index.html
+          ! grep -Eqi 'SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|sb_secret_' scripts/build-router.mjs apps/ecostory/index.html
+      - name: Management OS route
+        run: |
+          VERCEL_PROJECT_ID=prj_Mf2eYrSpBNQ9Pn1svgtELtMr3Vom npm run build
+          grep -q 'MANAGEMENT OS' dist/index.html
+          grep -q 'ijdlppmdjrapisckllfh' dist/app.js
+      - name: SafeZone V3 route
+        run: |
+          VERCEL_PROJECT_ID=prj_bpzzhlZJLApCib6KR4HS9zGSnFQa npm run build
+          grep -q 'THE SAFE ZONE V3' dist/index.html
+          grep -q 'safezone-v3-web-source' dist/index.html
+      - name: ECOSTORY route
+        run: |
+          VERCEL_PROJECT_ID=prj_XcpGijNhvbc9Tl1Su7IQWbxzUxlN npm run build
+          grep -q 'ECOSTORY Content Operating System' dist/index.html
+          grep -q 'ec_content_items' dist/index.html
+          grep -q 'ec_finance_entries' dist/index.html
+      - name: ElderCare Center route
+        run: |
+          VERCEL_PROJECT_ID=prj_boVLYc2g9QZVMO8fokTjsmDOsHxy npm run build
+          grep -q 'ElderCare Center OS' dist/index.html
+          grep -q 'eldercare-center-operating-system-30oog38bu' dist/index.html
+      - name: Performance Assessment route
+        run: |
+          VERCEL_PROJECT_ID=prj_bBdPmrVwrziN6QZFPXR8021FQVc6 npm run build
+          grep -q 'THESAFEZONE Performance Assessment' dist/index.html
+          grep -q 'performance-assessment-ui-source' dist/index.html
+      - name: Smoke routes cannot masquerade as production
+        run: |
+          VERCEL_PROJECT_ID=prj_78hUGSrQ8zSz4QmS1GBy6CmCypJa npm run build
+          grep -q 'TEST ONLY' dist/index.html
+          VERCEL_PROJECT_ID=prj_I9GtJ75zuWQqmYbDFFLvlKbF5toA npm run build
+          grep -q 'TEST ONLY' dist/index.html
+      - name: Unknown project fails closed
+        run: |
+          if VERCEL_PROJECT_ID=prj_UNKNOWN npm run build; then
+            echo 'Router incorrectly accepted an unknown project' >&2
+            exit 1
+          fi
