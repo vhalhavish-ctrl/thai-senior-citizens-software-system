@@ -1,0 +1,39 @@
+name: TSC Recovery Validation
+
+on:
+  push:
+    branches:
+      - recovery/tsc-known-good-artifact-20260828
+  workflow_dispatch:
+
+jobs:
+  validate-recovery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate recovery manifest
+        run: |
+          test -s package.json
+          test -s scripts/recover-build.mjs
+          test -s vercel.json
+          grep -q 'thai-senior-care-v2-recovery' package.json
+          grep -q 'ohwewoqfhxucnwtslybf' scripts/recover-build.mjs
+          grep -q 'bigoboqntynuiyqfxjgz' scripts/recover-build.mjs
+      - name: Build recovered artifact
+        run: npm run build
+      - name: Validate output fingerprint
+        run: |
+          test -s dist/index.html
+          test -s dist/recovery-meta.json
+          grep -q '<title>Thai Senior Care V2</title>' dist/index.html
+          grep -q 'ohwewoqfhxucnwtslybf.supabase.co' dist/index.html
+          ! grep -Eqi 'SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|sb_secret_' dist/index.html scripts/recover-build.mjs
+      - name: Archive recovery build metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: tsc-recovery-validation
+          path: |
+            dist/recovery-meta.json
