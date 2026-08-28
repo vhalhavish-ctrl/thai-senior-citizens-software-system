@@ -1,0 +1,131 @@
+{
+  "verified_at": "2026-08-28T11:45:00+07:00",
+  "github_owner": "vhalhavish-ctrl",
+  "supabase_organization": {
+    "name": "vhalhavish-ctrl's Org",
+    "id": "nxcpbsqxzuqxnqrnvbyx"
+  },
+  "vercel_team": {
+    "name": "vhalhavish-1099's projects",
+    "id": "team_X1D8wEIAnFgClnQkfCp3hOJ6"
+  },
+  "systems": [
+    {
+      "code": "S08",
+      "name": "Management OS",
+      "github_repo": "vhalhavish-ctrl/thai-senior-citizens-software-system",
+      "github_branch": "main",
+      "vercel_project": "management-os-webapp",
+      "vercel_project_id": "prj_Mf2eYrSpBNQ9Pn1svgtELtMr3Vom",
+      "production_url": "https://management-os-webapp.vercel.app",
+      "supabase_project": "management-os",
+      "supabase_ref": "ijdlppmdjrapisckllfh",
+      "status": "GO_WITH_UAT",
+      "notes": "Current known-good isolated backend. Keep as baseline."
+    },
+    {
+      "code": "S02",
+      "name": "ECOSTORY Content OS",
+      "github_repo": "vhalhavish-ctrl/thai-senior-citizens-software-system",
+      "github_branch": "recovery/s02-production-artifact",
+      "vercel_project": "ecostory-content-os",
+      "vercel_project_id": "prj_XcpGijNhvbc9Tl1Su7IQWbxzUxlN",
+      "production_url": "https://ecostory-content-os.vercel.app",
+      "known_good_recovery_url": "https://ecostory-content-60rd87uja-vhalhavish-1099s-projects.vercel.app",
+      "legacy_supabase_ref": "uxooqjhhzlxwhnrypnhl",
+      "dedicated_supabase_project": "ecostory-content-os",
+      "dedicated_supabase_ref": "raeohopqmbjpzjwlcaon",
+      "status": "RECOVERY_NO_GO_CURRENT_ALIAS",
+      "notes": "Current Vercel project source collides with S08 main. Preserve known-good artifact."
+    },
+    {
+      "code": "SAFEZONE-V3",
+      "name": "SafeZone V3",
+      "github_repo": "vhalhavish-ctrl/thai-senior-citizens-software-system",
+      "vercel_project": "safezone-v3-webapp",
+      "vercel_project_id": "prj_bpzzhlZJLApCib6KR4HS9zGSnFQa",
+      "production_url": "https://safezone-v3-webapp.vercel.app",
+      "supabase_project": "safezone-v3",
+      "supabase_ref": "ishjkptjhjgcuxxvqglh",
+      "status": "NO_GO_SOURCE_COLLISION"
+    },
+    {
+      "code": "PA",
+      "name": "THE SAFE ZONE Performance Assessment",
+      "github_repo": "vhalhavish-ctrl/thai-senior-citizens-software-system",
+      "vercel_project": "thesafezone-performance-assessment",
+      "vercel_project_id": "prj_bBdPmrVwrziN6QZFPXR8021FQVc6",
+      "production_url": "https://thesafezone-performance-assessment.vercel.app",
+      "supabase_project": "thesafezone-performance-assessment",
+      "supabase_ref": "rxdfsyiqzxyenwmfpeih",
+      "status": "NO_GO_SOURCE_COLLISION"
+    },
+    {
+      "code": "ELDERCARE-OS",
+      "name": "ElderCare Center Operating System",
+      "github_repo": "vhalhavish-ctrl/thai-senior-citizens-software-system",
+      "vercel_project": "eldercare-center-operating-system",
+      "vercel_project_id": "prj_boVLYc2g9QZVMO8fokTjsmDOsHxy",
+      "production_url": "https://eldercare-center-operating-system.vercel.app",
+      "supabase_project": "eldercare-center-operating-system",
+      "supabase_ref": "witsarmjqvzwksdrjjvd",
+      "status": "NO_GO_SOURCE_COLLISION"
+    },
+    {
+      "code": "TSC",
+      "name": "Thai Senior Citizens Software System",
+      "vercel_project": "thai-senior-citizens-software-system",
+      "vercel_project_id": "prj_5trgETpsR4S8RRYV9nQDB2soeggx",
+      "supabase_project": "thai-senior-citizens-software-system",
+      "supabase_ref": "ohwewoqfhxucnwtslybf",
+      "status": "NO_GO_BUILD_LINKAGE",
+      "notes": "Vercel metadata points to repository gos-platform while the connected GitHub account currently exposes no such repository. Latest known build failed because vite was not found."
+    },
+    {
+      "code": "EOS-CORE",
+      "name": "EOS Core",
+      "supabase_project": "eos-core",
+      "supabase_ref": "xcteqgmaugdkfylrdvxa",
+      "status": "HOLD"
+    },
+    {
+      "code": "IP-REGISTER",
+      "name": "WEAREZERO IP Register",
+      "supabase_project": "wearezero-ip-register",
+      "supabase_ref": "wpetskaqrsmrtgihrjhl",
+      "status": "HOLD_PRESERVE"
+    },
+    {
+      "code": "GOS",
+      "name": "GOS Platform",
+      "supabase_project": "gos-platform",
+      "supabase_ref": "bigoboqntynuiyqfxjgz",
+      "status": "HOLD_PRESERVE"
+    },
+    {
+      "code": "EOS-RESTORE-TEMP",
+      "name": "EOS Full Restore Drill TEMP",
+      "supabase_project": "EOS Full Restore Drill TEMP",
+      "supabase_ref": "feorlngegcidubynulgs",
+      "status": "TEST_ONLY"
+    },
+    {
+      "code": "LEGACY-SHARED",
+      "name": "Legacy Shared Backend",
+      "supabase_project": "vhalhavish-ctrl's Project",
+      "supabase_ref": "uxooqjhhzlxwhnrypnhl",
+      "status": "ACTIVE_PRESERVE_DO_NOT_DELETE",
+      "notes": "Contains multiple historical application schemas and remains required by recovered artifacts."
+    }
+  ],
+  "test_only_vercel_projects": [
+    {
+      "name": "eldercare-liquidglass-smoke",
+      "id": "prj_78hUGSrQ8zSz4QmS1GBy6CmCypJa"
+    },
+    {
+      "name": "eldercare-deploy-contract-smoke",
+      "id": "prj_I9GtJ75zuWQqmYbDFFLvlKbF5toA"
+    }
+  ]
+}
