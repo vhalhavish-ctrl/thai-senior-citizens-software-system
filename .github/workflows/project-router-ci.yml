@@ -19,8 +19,11 @@ jobs:
         run: |
           node --check scripts/build-router.mjs
           test -s apps/ecostory/index.html
+          test -s apps/eldercare-gateway/index.html
           grep -q 'ECOSTORY Content Operating System' apps/ecostory/index.html
-          ! grep -Eqi 'SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|sb_secret_' scripts/build-router.mjs apps/ecostory/index.html
+          grep -q 'สมัครสมาชิก / Sign Up' apps/eldercare-gateway/index.html
+          grep -q 'sb.auth.signUp' apps/eldercare-gateway/index.html
+          ! grep -Eqi 'SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|sb_secret_' scripts/build-router.mjs apps/ecostory/index.html apps/eldercare-gateway/index.html
       - name: Management OS route
         run: |
           VERCEL_PROJECT_ID=prj_Mf2eYrSpBNQ9Pn1svgtELtMr3Vom npm run build
@@ -42,6 +45,9 @@ jobs:
           VERCEL_PROJECT_ID=prj_boVLYc2g9QZVMO8fokTjsmDOsHxy npm run build
           grep -q 'ElderCare Center OS' dist/index.html
           grep -q 'eldercare-center-operating-system-30oog38bu' dist/index.html
+          grep -q 'สมัครสมาชิก / Sign Up' dist/index.html
+          grep -q 'witsarmjqvzwksdrjjvd.supabase.co' dist/index.html
+          grep -q 'requested_role' dist/index.html
       - name: Performance Assessment route
         run: |
           VERCEL_PROJECT_ID=prj_bBdPmrVwrziN6QZFPXR8021FQVc6 npm run build

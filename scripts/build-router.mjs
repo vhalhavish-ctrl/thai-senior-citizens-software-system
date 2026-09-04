@@ -14,7 +14,6 @@ const IDS = {
 const TARGETS = {
   safezone: 'https://uxooqjhhzlxwhnrypnhl.supabase.co/functions/v1/safezone-v3-web-source',
   performance: 'https://uxooqjhhzlxwhnrypnhl.supabase.co/functions/v1/performance-assessment-ui-source',
-  eldercare: 'https://eldercare-center-operating-system-30oog38bu.vercel.app',
 };
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -24,6 +23,7 @@ const smokePage = (name, purpose) => `<!doctype html><html><head><meta charset="
 async function clean(){ await rm('dist',{recursive:true,force:true}); await mkdir('dist',{recursive:true}); }
 async function management(){ for (const f of ['index.html','styles.css','app.js']) await copyFile(f,`dist/${f}`); }
 async function ecostory(){ await copyFile('apps/ecostory/index.html','dist/index.html'); }
+async function eldercare(){ await copyFile('apps/eldercare-gateway/index.html','dist/index.html'); }
 async function html(s){ await writeFile('dist/index.html',s,'utf8'); }
 
 await clean();
@@ -38,7 +38,7 @@ switch(PROJECT){
     await html(redirectPage('THESAFEZONE Performance Assessment','THESAFEZONE Performance Assessment',TARGETS.performance,'Authenticated branch-isolated assessment, dossiers, criteria governance, two-way sync and audit.'));
     break;
   case IDS.eldercare:
-    await html(redirectPage('ElderCare Center OS','ElderCare Center Operating System',TARGETS.eldercare,'Pinned to a verified known-good ElderCare deployment while source recovery remains documented.'));
+    await eldercare();
     break;
   case IDS.ecostory:
     await ecostory();
